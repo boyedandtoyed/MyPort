@@ -28,12 +28,8 @@ export function Sun() {
       <pointLight color="#FDB813" intensity={3} distance={100} decay={1.4} />
       <mesh ref={sun}>
         <sphereGeometry args={[3, 96, 96]} />
-        <meshStandardMaterial
+        <meshBasicMaterial
           color="#FDB813"
-          emissive="#FDB813"
-          emissiveIntensity={2.15}
-          roughness={0.35}
-          metalness={0}
         />
       </mesh>
       <mesh ref={corona} scale={1.62}>

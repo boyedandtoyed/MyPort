@@ -20,7 +20,7 @@ function MobileSolarSystem({ onProjectClick }: { onProjectClick: (project: Plane
   return (
     <div className="mobile-system md:hidden" aria-label="Mobile solar system project view">
       <div className="mobile-sun">
-        <span>Saujan</span>
+        <span>Binod</span>
       </div>
       {mobileProjects.map((project, index) => (
         <div

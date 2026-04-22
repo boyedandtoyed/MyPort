@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useMemo, useRef, useState } from "react";
-import { Html, Trail } from "@react-three/drei";
+import { Html } from "@react-three/drei";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import type { PlanetProject } from "@/data/projects";
@@ -56,6 +56,7 @@ function makePlanetTexture(project: PlanetProject) {
 export const Planet = memo(function Planet({ project, parentPosition, onClick }: PlanetProps) {
   const group = useRef<THREE.Group>(null);
   const mesh = useRef<THREE.Mesh>(null);
+  const initialized = useRef(false);
   const [hovered, setHovered] = useState(false);
   const texture = useMemo(() => makePlanetTexture(project), [project]);
   const worldPosition = useMemo(() => new THREE.Vector3(), []);
@@ -66,7 +67,12 @@ export const Planet = memo(function Planet({ project, parentPosition, onClick }:
     if (parentPosition) pos.add(parentPosition);
 
     if (group.current) {
-      group.current.position.lerp(pos, 0.24);
+      if (!initialized.current) {
+        group.current.position.copy(pos);
+        initialized.current = true;
+      } else {
+        group.current.position.lerp(pos, 0.24);
+      }
       group.current.getWorldPosition(worldPosition);
       const scale = hovered ? 1.18 : 1;
       group.current.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.18);
@@ -84,31 +90,30 @@ export const Planet = memo(function Planet({ project, parentPosition, onClick }:
 
   return (
     <group ref={group}>
-      <Trail width={0.38} length={20} color={project.color} attenuation={(t) => t * t} decay={1.8}>
-        <mesh
-          ref={mesh}
-          onClick={handleClick}
-          onPointerOver={(event) => {
-            event.stopPropagation();
-            setHovered(true);
-            document.body.style.cursor = "pointer";
-          }}
-          onPointerOut={() => {
-            setHovered(false);
-            document.body.style.cursor = "auto";
-          }}
-        >
-          <sphereGeometry args={[project.radius, 64, 64]} />
-          <meshStandardMaterial
-            map={texture}
-            color={project.color}
-            roughness={0.8}
-            metalness={0.1}
-            emissive={project.color}
-            emissiveIntensity={0.1}
-          />
-        </mesh>
-      </Trail>
+      <mesh
+        ref={mesh}
+        onClick={handleClick}
+        onPointerOver={(event) => {
+          event.stopPropagation();
+          setHovered(true);
+          document.body.style.cursor = "pointer";
+        }}
+        onPointerOut={() => {
+          setHovered(false);
+          document.body.style.cursor = "auto";
+        }}
+      >
+        <sphereGeometry args={[project.radius, 64, 64]} />
+        <meshBasicMaterial
+          map={texture}
+          color={project.color}
+        />
+      </mesh>
+
+      <mesh scale={1.22}>
+        <sphereGeometry args={[project.radius, 32, 32]} />
+        <meshBasicMaterial color={project.color} transparent opacity={0.09} depthWrite={false} />
+      </mesh>
 
       {project.hasRing ? (
         <group rotation={[project.ringTilt ?? 0.35, 0.2, 0.15]}>
@@ -126,14 +131,10 @@ export const Planet = memo(function Planet({ project, parentPosition, onClick }:
       {hovered ? (
         <Html center distanceFactor={12} position={[0, project.radius + 1.2, 0]}>
           <div className="section-label" style={{ borderColor: project.color, color: project.color }}>
-            {project.planet} · {project.name}
+            {project.planet} - {project.name}
           </div>
         </Html>
       ) : null}
-
-      {project.moons?.map((moon) => (
-        <Planet key={moon.id} project={moon} parentPosition={worldPosition} onClick={onClick} />
-      ))}
     </group>
   );
 });

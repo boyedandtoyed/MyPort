@@ -20,13 +20,12 @@ export type PlanetProject = {
   status: ProjectStatus;
   github?: string;
   liveUrl?: string;
-  moons?: PlanetProject[];
 };
 
 export const sunProfile = {
-  name: "Saujan Parajuli",
-  title: "Computer Science Student · AI/ML Engineer",
-  school: "Computer Science Student · UT Arlington",
+  name: "Binod Tiwari",
+  title: "Computer Science Student - AI/ML Engineer",
+  school: "Computer Science Student - AI/ML Portfolio Builder",
   tagline: "Building intelligent systems from scratch",
   color: "#FDB813"
 };
@@ -37,7 +36,7 @@ export const projects: PlanetProject[] = [
     planet: "Mercury",
     name: "NeuralForge Academy",
     subtitle: "Interactive AI curriculum engine",
-    categoryIcon: "🧠",
+    categoryIcon: "ML",
     color: "#A8A9AD",
     secondaryColor: "#6f7178",
     radius: 0.82,
@@ -56,7 +55,7 @@ export const projects: PlanetProject[] = [
     planet: "Venus",
     name: "DocuMind",
     subtitle: "Local production RAG engine",
-    categoryIcon: "📚",
+    categoryIcon: "RAG",
     color: "#E8CDA0",
     secondaryColor: "#b8844b",
     radius: 1.08,
@@ -75,7 +74,7 @@ export const projects: PlanetProject[] = [
     planet: "Earth",
     name: "PipelineGuard",
     subtitle: "AI DevOps pipeline sentinel",
-    categoryIcon: "🛰️",
+    categoryIcon: "CI",
     color: "#4B9CD3",
     secondaryColor: "#36b37e",
     radius: 1.18,
@@ -93,7 +92,7 @@ export const projects: PlanetProject[] = [
     planet: "Mars",
     name: "ResearchCrew",
     subtitle: "Multi-agent research system",
-    categoryIcon: "🔎",
+    categoryIcon: "AI",
     color: "#C1440E",
     secondaryColor: "#f17b48",
     radius: 1.02,
@@ -111,7 +110,7 @@ export const projects: PlanetProject[] = [
     planet: "Jupiter",
     name: "DataFlowAgent",
     subtitle: "Conversational data pipelines",
-    categoryIcon: "📊",
+    categoryIcon: "DB",
     color: "#C88B3A",
     secondaryColor: "#f1c27b",
     radius: 2.18,
@@ -125,34 +124,14 @@ export const projects: PlanetProject[] = [
     description:
       "Conversational AI agent that connects to databases, writes and executes data pipelines on the fly, and generates interactive Plotly dashboards from natural language queries.",
     status: "Queued",
-    liveUrl: "https://dataflowagent.binodtiwari.com",
-    moons: [
-      {
-        id: "modelforge",
-        planet: "Jupiter Moon",
-        name: "ModelForge",
-        subtitle: "LLM fine-tuning toolkit",
-        categoryIcon: "🧪",
-        color: "#9B59B6",
-        secondaryColor: "#d5a6e6",
-        radius: 0.42,
-        orbitRadius: 3.2,
-        orbitSpeed: 1.25,
-        orbitTilt: 0.35,
-        tags: ["QLoRA", "Unsloth", "vLLM", "W&B", "PEFT"],
-        description:
-          "End-to-end LLM fine-tuning toolkit with QLoRA, Unsloth acceleration, vLLM serving, and W&B experiment tracking.",
-        status: "Queued",
-        liveUrl: "https://modelforge.binodtiwari.com"
-      }
-    ]
+    liveUrl: "https://dataflowagent.binodtiwari.com"
   },
   {
     id: "defectscope",
     planet: "Saturn",
     name: "DefectScope",
     subtitle: "Industrial vision inspection",
-    categoryIcon: "👁️",
+    categoryIcon: "CV",
     color: "#E4D191",
     secondaryColor: "#bfa56a",
     radius: 1.92,
@@ -166,34 +145,14 @@ export const projects: PlanetProject[] = [
     description:
       "Real-time industrial defect detection using YOLOE object detection + SAM2 segmentation. TensorRT optimized for edge GPU deployment. Gradio demo interface.",
     status: "Queued",
-    liveUrl: "https://defectscope.binodtiwari.com",
-    moons: [
-      {
-        id: "mlpipelinex",
-        planet: "Saturn Moon",
-        name: "MLPipelineX",
-        subtitle: "End-to-end MLOps",
-        categoryIcon: "⚙️",
-        color: "#2ECC71",
-        secondaryColor: "#9af0bf",
-        radius: 0.45,
-        orbitRadius: 3.6,
-        orbitSpeed: 1.04,
-        orbitTilt: -0.28,
-        tags: ["MLflow", "Airflow", "Evidently AI", "Prometheus", "Grafana"],
-        description:
-          "Full MLOps pipeline: experiment tracking, automated retraining, drift detection, and Grafana monitoring dashboards.",
-        status: "Queued",
-        liveUrl: "https://mlpipelinex.binodtiwari.com"
-      }
-    ]
+    liveUrl: "https://defectscope.binodtiwari.com"
   },
   {
     id: "contractlens",
     planet: "Uranus",
     name: "ContractLens",
     subtitle: "Legal NLP risk analysis",
-    categoryIcon: "⚖️",
+    categoryIcon: "NLP",
     color: "#7DE8E8",
     secondaryColor: "#4bb2c2",
     radius: 1.44,
@@ -214,7 +173,7 @@ export const projects: PlanetProject[] = [
     planet: "Neptune",
     name: "QuantumShield",
     subtitle: "Post-quantum security layer",
-    categoryIcon: "🛡️",
+    categoryIcon: "PQC",
     color: "#3F54BA",
     secondaryColor: "#80a3ff",
     radius: 1.48,
@@ -232,4 +191,4 @@ export const projects: PlanetProject[] = [
   }
 ];
 
-export const allProjects = projects.flatMap((project) => [project, ...(project.moons ?? [])]);
+export const allProjects = projects;

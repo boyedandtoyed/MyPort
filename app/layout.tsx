@@ -16,11 +16,11 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://binodtiwari.com"),
-  title: "Saujan Parajuli | AI/ML Portfolio",
+  title: "Binod Tiwari | AI/ML Portfolio",
   description:
-    "3D interactive portfolio for Saujan Parajuli, a UT Arlington Computer Science student building AI/ML systems.",
+    "3D interactive portfolio for Binod Tiwari, a Computer Science student building AI/ML systems.",
   openGraph: {
-    title: "Saujan Parajuli | AI/ML Portfolio",
+    title: "Binod Tiwari | AI/ML Portfolio",
     description: "A solar-system portfolio where every planet is an AI/ML project.",
     url: "https://binodtiwari.com",
     siteName: "binodtiwari.com",

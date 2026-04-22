@@ -15,23 +15,22 @@ export function AboutPanel() {
       <div className="glass-panel max-w-xl p-7 md:p-9">
         <div className="mb-7 flex items-center gap-5">
           <div className="profile-orb">
-            <span>SP</span>
+            <span>BT</span>
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.28em] text-[#7DE8E8]">About the sun</p>
-            <h2 className="font-heading text-3xl font-semibold text-white md:text-4xl">Saujan Parajuli</h2>
-            <p className="mt-1 text-white/60">Computer Science student at UT Arlington</p>
+            <h2 className="font-heading text-3xl font-semibold text-white md:text-4xl">Binod Tiwari</h2>
+            <p className="mt-1 text-white/60">Computer Science student and AI/ML portfolio builder</p>
           </div>
         </div>
         <p className="leading-8 text-white/78">
-          I build AI systems and ship production-grade projects. Currently working on a 10-project AI/ML
+          I build AI systems and ship production-grade projects. Currently working on an 8-project AI/ML
           portfolio spanning RAG engines, computer vision, NLP, DevOps agents, post-quantum security, and MLOps.
-          I also work as a backend and Android developer on the StudyAI senior design project.
         </p>
         <div className="mt-7 grid grid-cols-3 gap-3 text-center">
           {[
-            ["10", "AI/ML projects"],
-            ["UTA", "Computer Science"],
+            ["8", "AI/ML projects"],
+            ["CS", "Student"],
             ["P40", "Local AI server"]
           ].map(([value, label]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-white/[0.035] p-4">

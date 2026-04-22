@@ -23,7 +23,7 @@ export function ContactPanel() {
             <a className="icon-button" href="https://github.com/boyedandtoyed" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
               <Github size={19} />
             </a>
-            <a className="icon-button" href="https://www.linkedin.com/in/saujanparajuli" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn">
+            <a className="icon-button" href="https://www.linkedin.com/in/binodtiwari" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn">
               <Linkedin size={19} />
             </a>
           </div>

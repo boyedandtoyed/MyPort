@@ -21,7 +21,7 @@ export function HeroOverlay() {
       </h1>
       <div className="mt-5 max-w-xl space-y-2 text-white/75">
         <p className="text-base md:text-xl">{sunProfile.school}</p>
-        <p className="font-heading text-xl italic text-[#FDB813] md:text-2xl">AI/ML Engineer in the making</p>
+        <p className="font-heading text-xl italic text-[#FDB813] md:text-2xl">{sunProfile.tagline}</p>
       </div>
       <div className="mt-6 flex items-center gap-3 font-heading text-sm uppercase tracking-[0.24em] text-white/55">
         Scroll through project orbits

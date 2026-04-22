@@ -1,7 +1,6 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import { Suspense } from "react";
 import * as THREE from "three";
 import { projects, type PlanetProject } from "@/data/projects";
@@ -33,7 +32,7 @@ export function SolarSystem({ selected, onPlanetClick, onReady }: SolarSystemPro
       >
         <Suspense fallback={null}>
           <color attach="background" args={["#03040b"]} />
-          <ambientLight color="#8aa5ff" intensity={0.26} />
+          <ambientLight color="#ffffff" intensity={1.2} />
           <StarField />
           <Nebula />
           <Sun />
@@ -44,10 +43,6 @@ export function SolarSystem({ selected, onPlanetClick, onReady }: SolarSystemPro
             <Planet key={project.id} project={project} onClick={onPlanetClick} />
           ))}
           <CameraController selected={selected} />
-          <EffectComposer>
-            <Bloom luminanceThreshold={0.3} intensity={0.8} mipmapBlur />
-            <Vignette eskil={false} offset={0.18} darkness={0.78} />
-          </EffectComposer>
         </Suspense>
       </Canvas>
     </div>
