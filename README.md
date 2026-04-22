@@ -5,7 +5,7 @@
 ## What Was Built
 
 - Next.js 14 App Router + TypeScript single-page portfolio
-- React Three Fiber / Three.js solar system scene with animated sun, stars, nebula, orbit rings, eight planets, two moons, and camera transitions
+- React Three Fiber / Three.js solar system scene with animated sun, stars, nebula, Milky Way band, visual cloud belt, orbit rings, eight planets, Pluto, and camera transitions
 - Project data layer for 10 portfolio projects and their future subdomains
 - Glass UI project detail cards, loading screen, nav dots, hero overlay, about, skills, and contact panels
 - Mobile fallback using a lightweight CSS orbital system

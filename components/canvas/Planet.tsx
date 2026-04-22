@@ -11,7 +11,6 @@ type PlanetProps = {
   project: PlanetProject;
   parentPosition?: THREE.Vector3;
   onClick: (project: PlanetProject, position: THREE.Vector3) => void;
-  isMoon?: boolean;
   isPaused: boolean;
   planetPositions: React.MutableRefObject<Map<string, THREE.Vector3>>;
 };
@@ -62,7 +61,6 @@ export const Planet = memo(function Planet({
   project,
   parentPosition,
   onClick,
-  isMoon = false,
   isPaused,
   planetPositions
 }: PlanetProps) {
@@ -91,7 +89,7 @@ export const Planet = memo(function Planet({
       }
       group.current.getWorldPosition(worldPosition);
       planetPositions.current.set(project.id, worldPosition.clone());
-      const scale = hovered ? (isMoon ? 1.28 : 1.18) : 1;
+      const scale = hovered ? 1.18 : 1;
       group.current.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.18);
     }
     if (mesh.current) {
@@ -121,13 +119,13 @@ export const Planet = memo(function Planet({
           document.body.style.cursor = "auto";
         }}
       >
-        <sphereGeometry args={[project.radius, isMoon ? 32 : 64, isMoon ? 32 : 64]} />
+        <sphereGeometry args={[project.radius, 64, 64]} />
         <meshBasicMaterial map={texture} color={project.color} />
       </mesh>
 
       <mesh scale={1.22}>
         <sphereGeometry args={[project.radius, 24, 24]} />
-        <meshBasicMaterial color={project.color} transparent opacity={isMoon ? 0.14 : 0.09} depthWrite={false} />
+        <meshBasicMaterial color={project.color} transparent opacity={0.09} depthWrite={false} />
       </mesh>
 
       {project.hasRing ? (
@@ -150,18 +148,6 @@ export const Planet = memo(function Planet({
           </div>
         </Html>
       ) : null}
-
-      {project.moons?.map((moon) => (
-        <Planet
-          key={moon.id}
-          project={moon}
-          parentPosition={worldPosition}
-          onClick={onClick}
-          isMoon
-          isPaused={isPaused}
-          planetPositions={planetPositions}
-        />
-      ))}
     </group>
   );
 });

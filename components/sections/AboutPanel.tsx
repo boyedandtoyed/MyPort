@@ -25,8 +25,8 @@ export function AboutPanel() {
         </div>
         <p className="leading-8 text-white/78">
           I build AI systems and ship production-grade projects. Currently working on a 10-project AI/ML
-          portfolio organized as 8 planets and 2 moons, spanning RAG engines, computer vision, NLP, DevOps agents,
-          post-quantum security, and MLOps.
+          portfolio organized as 8 planets, Pluto, and one sun-core project, spanning RAG engines, computer vision,
+          NLP, DevOps agents, post-quantum security, and MLOps.
         </p>
         <div className="mt-7 grid grid-cols-3 gap-3 text-center">
           {[

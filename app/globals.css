@@ -236,6 +236,15 @@ a {
   color: #070711;
 }
 
+.mobile-sun button {
+  border: 0;
+  background: transparent;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-weight: 800;
+  color: #070711;
+  cursor: pointer;
+}
+
 .mobile-orbit {
   position: absolute;
   z-index: 1;

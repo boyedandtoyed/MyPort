@@ -3,10 +3,12 @@
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import * as THREE from "three";
-import { projects, type PlanetProject } from "@/data/projects";
+import { projects, sunProject, type PlanetProject } from "@/data/projects";
 import type { SelectedPlanet } from "@/hooks/usePlanetClick";
 import { CameraController } from "./CameraController";
 import { Nebula } from "./Nebula";
+import { MilkyWay } from "./MilkyWay";
+import { OortCloud } from "./OortCloud";
 import { OrbitRing } from "./OrbitRing";
 import { Planet } from "./Planet";
 import { StarField } from "./StarField";
@@ -35,9 +37,11 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
         <Suspense fallback={null}>
           <color attach="background" args={["#03040b"]} />
           <ambientLight color="#ffffff" intensity={1.2} />
+          <MilkyWay />
           <StarField />
           <Nebula />
-          <Sun />
+          <Sun project={sunProject} onClick={onPlanetClick} />
+          <OortCloud />
           {projects.map((project) => (
             <OrbitRing key={`${project.id}-orbit`} radius={project.orbitRadius} tilt={project.orbitTilt} />
           ))}

@@ -20,7 +20,6 @@ export type PlanetProject = {
   status: ProjectStatus;
   github?: string;
   liveUrl?: string;
-  moons?: PlanetProject[];
 };
 
 export const sunProfile = {
@@ -29,6 +28,25 @@ export const sunProfile = {
   school: "Computer Science Student - AI/ML Portfolio Builder",
   tagline: "Building intelligent systems from scratch",
   color: "#FDB813"
+};
+
+export const sunProject: PlanetProject = {
+  id: "mlpipelinex",
+  planet: "Sun Core",
+  name: "MLPipelineX",
+  subtitle: "End-to-end MLOps",
+  categoryIcon: "OPS",
+  color: "#FDB813",
+  secondaryColor: "#2ECC71",
+  radius: 3,
+  orbitRadius: 0,
+  orbitSpeed: 0,
+  orbitTilt: 0,
+  tags: ["MLflow", "Airflow", "Evidently AI", "Prometheus", "Grafana"],
+  description:
+    "Full MLOps pipeline: experiment tracking, automated retraining, drift detection, and Grafana monitoring dashboards.",
+  status: "Queued",
+  liveUrl: "https://mlpipelinex.binodtiwari.com"
 };
 
 export const projects: PlanetProject[] = [
@@ -125,27 +143,7 @@ export const projects: PlanetProject[] = [
     description:
       "Conversational AI agent that connects to databases, writes and executes data pipelines on the fly, and generates interactive Plotly dashboards from natural language queries.",
     status: "Queued",
-    liveUrl: "https://dataflowagent.binodtiwari.com",
-    moons: [
-      {
-        id: "modelforge",
-        planet: "Jupiter Moon",
-        name: "ModelForge",
-        subtitle: "LLM fine-tuning toolkit",
-        categoryIcon: "LLM",
-        color: "#9B59B6",
-        secondaryColor: "#d5a6e6",
-        radius: 0.34,
-        orbitRadius: 3.15,
-        orbitSpeed: 1.25,
-        orbitTilt: 0.35,
-        tags: ["QLoRA", "Unsloth", "vLLM", "W&B", "PEFT"],
-        description:
-          "End-to-end LLM fine-tuning toolkit with QLoRA, Unsloth acceleration, vLLM serving, and W&B experiment tracking.",
-        status: "Queued",
-        liveUrl: "https://modelforge.binodtiwari.com"
-      }
-    ]
+    liveUrl: "https://dataflowagent.binodtiwari.com"
   },
   {
     id: "defectscope",
@@ -166,27 +164,7 @@ export const projects: PlanetProject[] = [
     description:
       "Real-time industrial defect detection using YOLOE object detection + SAM2 segmentation. TensorRT optimized for edge GPU deployment. Gradio demo interface.",
     status: "Queued",
-    liveUrl: "https://defectscope.binodtiwari.com",
-    moons: [
-      {
-        id: "mlpipelinex",
-        planet: "Saturn Moon",
-        name: "MLPipelineX",
-        subtitle: "End-to-end MLOps",
-        categoryIcon: "OPS",
-        color: "#2ECC71",
-        secondaryColor: "#9af0bf",
-        radius: 0.36,
-        orbitRadius: 3.75,
-        orbitSpeed: 1.04,
-        orbitTilt: -0.28,
-        tags: ["MLflow", "Airflow", "Evidently AI", "Prometheus", "Grafana"],
-        description:
-          "Full MLOps pipeline: experiment tracking, automated retraining, drift detection, and Grafana monitoring dashboards.",
-        status: "Queued",
-        liveUrl: "https://mlpipelinex.binodtiwari.com"
-      }
-    ]
+    liveUrl: "https://defectscope.binodtiwari.com"
   },
   {
     id: "contractlens",
@@ -229,7 +207,25 @@ export const projects: PlanetProject[] = [
       "Post-quantum cryptography API and wallet UI. Implements NIST-standardized ML-DSA-65 signatures and ML-KEM-768 key encapsulation, a quantum-resistant security layer.",
     status: "Queued",
     liveUrl: "https://quantumshield.binodtiwari.com"
+  },
+  {
+    id: "modelforge",
+    planet: "Pluto",
+    name: "ModelForge",
+    subtitle: "LLM fine-tuning toolkit",
+    categoryIcon: "LLM",
+    color: "#9B59B6",
+    secondaryColor: "#d5a6e6",
+    radius: 0.62,
+    orbitRadius: 48.5,
+    orbitSpeed: 0.075,
+    orbitTilt: 0.16,
+    tags: ["QLoRA", "Unsloth", "vLLM", "W&B", "PEFT"],
+    description:
+      "End-to-end LLM fine-tuning toolkit with QLoRA, Unsloth acceleration, vLLM serving, and W&B experiment tracking.",
+    status: "Queued",
+    liveUrl: "https://modelforge.binodtiwari.com"
   }
 ];
 
-export const allProjects = projects.flatMap((project) => [project, ...(project.moons ?? [])]);
+export const allProjects = [sunProject, ...projects];

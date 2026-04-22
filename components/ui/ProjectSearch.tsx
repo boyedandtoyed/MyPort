@@ -1,7 +1,7 @@
 "use client";
 
-import { Pause, Play, Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Pause, Play, Search, X } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { PlanetProject } from "@/data/projects";
 
 type ProjectSearchProps = {
@@ -14,6 +14,8 @@ type ProjectSearchProps = {
 export function ProjectSearch({ projects, isPaused, onTogglePause, onSelect }: ProjectSearchProps) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const results = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -34,13 +36,36 @@ export function ProjectSearch({ projects, isPaused, onTogglePause, onSelect }: P
     });
   }, [projects, query]);
 
+  useEffect(() => {
+    const onPointerDown = (event: PointerEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        inputRef.current?.blur();
+      }
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, []);
+
   return (
-    <div className="fixed left-1/2 top-4 z-40 w-[min(560px,calc(100vw-1.5rem))] -translate-x-1/2">
+    <div ref={rootRef} className="fixed left-1/2 top-4 z-40 w-[min(560px,calc(100vw-1.5rem))] -translate-x-1/2">
       <div className="flex items-center gap-2 rounded-lg border border-white/12 bg-[#080a18]/88 p-2 shadow-2xl backdrop-blur-2xl">
         <div className="grid size-9 flex-none place-items-center text-white/55">
           <Search size={18} />
         </div>
         <input
+          ref={inputRef}
           className="h-10 min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/36"
           value={query}
           onChange={(event) => {
@@ -50,6 +75,21 @@ export function ProjectSearch({ projects, isPaused, onTogglePause, onSelect }: P
           onFocus={() => setOpen(true)}
           placeholder="Search projects or planets"
         />
+        {query ? (
+          <button
+            className="grid size-10 flex-none place-items-center rounded-md text-white/48 transition hover:bg-white/[0.055] hover:text-white"
+            onClick={() => {
+              setQuery("");
+              setOpen(false);
+              inputRef.current?.blur();
+            }}
+            aria-label="Close search"
+            title="Close search"
+            type="button"
+          >
+            <X size={18} />
+          </button>
+        ) : null}
         <button
           className="grid size-10 flex-none place-items-center rounded-md border border-white/10 bg-white/[0.045] text-white/72 transition hover:border-white/30 hover:text-white"
           onClick={onTogglePause}
@@ -73,6 +113,7 @@ export function ProjectSearch({ projects, isPaused, onTogglePause, onSelect }: P
                   onSelect(project);
                   setQuery(project.name);
                   setOpen(false);
+                  inputRef.current?.blur();
                 }}
                 type="button"
               >

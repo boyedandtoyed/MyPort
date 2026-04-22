@@ -11,7 +11,7 @@ import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { NavDots } from "@/components/ui/NavDots";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { ProjectSearch } from "@/components/ui/ProjectSearch";
-import { allProjects, projects, type PlanetProject } from "@/data/projects";
+import { allProjects, projects, sunProject, type PlanetProject } from "@/data/projects";
 import { usePlanetClick } from "@/hooks/usePlanetClick";
 import { useScrollSection } from "@/hooks/useScrollSection";
 
@@ -21,7 +21,9 @@ function MobileSolarSystem({ onProjectClick }: { onProjectClick: (project: Plane
   return (
     <div className="mobile-system md:hidden" aria-label="Mobile solar system project view">
       <div className="mobile-sun">
-        <span>Binod</span>
+        <button onClick={() => onProjectClick(sunProject, new THREE.Vector3(0, 0, 0))} type="button">
+          Binod
+        </button>
       </div>
       {mobileProjects.map((project, index) => (
         <div
@@ -79,7 +81,10 @@ export default function Home() {
         isPaused={isPaused}
         onTogglePause={() => setIsPaused((value) => !value)}
         onSelect={(project) => {
-          const position = planetPositions.current.get(project.id)?.clone() ?? new THREE.Vector3(0, 0, 0);
+          const position =
+            project.id === sunProject.id
+              ? new THREE.Vector3(0, 0, 0)
+              : planetPositions.current.get(project.id)?.clone() ?? new THREE.Vector3(0, 0, 0);
           selectPlanet(project, position);
         }}
       />
