@@ -1,0 +1,10 @@
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: binodtiwari-portfolio:latest
+    container_name: binodtiwari-portfolio
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:80"
