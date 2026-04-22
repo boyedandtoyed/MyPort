@@ -26,16 +26,14 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
   return (
     <div className="fixed inset-0 hidden md:block">
       <Canvas
-        gl={{ antialias: true, alpha: false }}
+        gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
         shadows={false}
-        onCreated={({ gl }) => {
-          gl.setClearColor("#03040b");
+        onCreated={() => {
           onReady();
         }}
       >
         <Suspense fallback={null}>
-          <color attach="background" args={["#03040b"]} />
           <ambientLight color="#ffffff" intensity={1.2} />
           <MilkyWay />
           <StarField />

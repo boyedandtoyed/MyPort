@@ -66,6 +66,7 @@ export default function Home() {
   return (
     <main className="relative min-h-[420vh] overflow-x-hidden bg-[#03040b] text-white">
       <LoadingScreen visible={!ready} />
+      <div className="milky-way-photo-background" aria-hidden="true" />
       <SolarSystem
         selected={selected}
         onPlanetClick={selectPlanet}

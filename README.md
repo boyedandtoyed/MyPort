@@ -48,6 +48,16 @@ out/
 
 That folder can be served directly by Nginx.
 
+## Background Image
+
+Place the Milky Way background image at:
+
+```text
+public/images/milky-way.jpg
+```
+
+The Three.js canvas is transparent, so this image renders behind the solar system on desktop and mobile.
+
 ## Docker
 
 Build and run the portfolio container:
