@@ -11,6 +11,7 @@ type PlanetProps = {
   project: PlanetProject;
   parentPosition?: THREE.Vector3;
   onClick: (project: PlanetProject, position: THREE.Vector3) => void;
+  isMoon?: boolean;
 };
 
 function makePlanetTexture(project: PlanetProject) {
@@ -53,7 +54,7 @@ function makePlanetTexture(project: PlanetProject) {
   return texture;
 }
 
-export const Planet = memo(function Planet({ project, parentPosition, onClick }: PlanetProps) {
+export const Planet = memo(function Planet({ project, parentPosition, onClick, isMoon = false }: PlanetProps) {
   const group = useRef<THREE.Group>(null);
   const mesh = useRef<THREE.Mesh>(null);
   const initialized = useRef(false);
@@ -74,7 +75,7 @@ export const Planet = memo(function Planet({ project, parentPosition, onClick }:
         group.current.position.lerp(pos, 0.24);
       }
       group.current.getWorldPosition(worldPosition);
-      const scale = hovered ? 1.18 : 1;
+      const scale = hovered ? (isMoon ? 1.28 : 1.18) : 1;
       group.current.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.18);
     }
     if (mesh.current) {
@@ -103,16 +104,13 @@ export const Planet = memo(function Planet({ project, parentPosition, onClick }:
           document.body.style.cursor = "auto";
         }}
       >
-        <sphereGeometry args={[project.radius, 64, 64]} />
-        <meshBasicMaterial
-          map={texture}
-          color={project.color}
-        />
+        <sphereGeometry args={[project.radius, isMoon ? 32 : 64, isMoon ? 32 : 64]} />
+        <meshBasicMaterial map={texture} color={project.color} />
       </mesh>
 
       <mesh scale={1.22}>
-        <sphereGeometry args={[project.radius, 32, 32]} />
-        <meshBasicMaterial color={project.color} transparent opacity={0.09} depthWrite={false} />
+        <sphereGeometry args={[project.radius, 24, 24]} />
+        <meshBasicMaterial color={project.color} transparent opacity={isMoon ? 0.14 : 0.09} depthWrite={false} />
       </mesh>
 
       {project.hasRing ? (
@@ -135,6 +133,10 @@ export const Planet = memo(function Planet({ project, parentPosition, onClick }:
           </div>
         </Html>
       ) : null}
+
+      {project.moons?.map((moon) => (
+        <Planet key={moon.id} project={moon} parentPosition={worldPosition} onClick={onClick} isMoon />
+      ))}
     </group>
   );
 });

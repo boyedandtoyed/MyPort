@@ -24,12 +24,13 @@ export function AboutPanel() {
           </div>
         </div>
         <p className="leading-8 text-white/78">
-          I build AI systems and ship production-grade projects. Currently working on an 8-project AI/ML
-          portfolio spanning RAG engines, computer vision, NLP, DevOps agents, post-quantum security, and MLOps.
+          I build AI systems and ship production-grade projects. Currently working on a 10-project AI/ML
+          portfolio organized as 8 planets and 2 moons, spanning RAG engines, computer vision, NLP, DevOps agents,
+          post-quantum security, and MLOps.
         </p>
         <div className="mt-7 grid grid-cols-3 gap-3 text-center">
           {[
-            ["8", "AI/ML projects"],
+            ["10", "AI/ML projects"],
             ["CS", "Student"],
             ["P40", "Local AI server"]
           ].map(([value, label]) => (

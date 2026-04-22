@@ -5,8 +5,8 @@
 ## What Was Built
 
 - Next.js 14 App Router + TypeScript single-page portfolio
-- React Three Fiber / Three.js solar system scene with animated sun, stars, nebula, orbit rings, eight planets, and camera transitions
-- Project data layer for 8 portfolio projects and their future subdomains
+- React Three Fiber / Three.js solar system scene with animated sun, stars, nebula, orbit rings, eight planets, two moons, and camera transitions
+- Project data layer for 10 portfolio projects and their future subdomains
 - Glass UI project detail cards, loading screen, nav dots, hero overlay, about, skills, and contact panels
 - Mobile fallback using a lightweight CSS orbital system
 - Static export configuration for serving from Nginx
@@ -96,6 +96,8 @@ dataflowagent.binodtiwari.com      -> DataFlowAgent
 defectscope.binodtiwari.com        -> DefectScope
 contractlens.binodtiwari.com       -> ContractLens
 quantumshield.binodtiwari.com      -> QuantumShield
+modelforge.binodtiwari.com         -> ModelForge
+mlpipelinex.binodtiwari.com        -> MLPipelineX
 neuralforge.binodtiwari.com        -> NeuralForge Academy
 ```
 
