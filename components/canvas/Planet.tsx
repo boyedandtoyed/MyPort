@@ -12,6 +12,8 @@ type PlanetProps = {
   parentPosition?: THREE.Vector3;
   onClick: (project: PlanetProject, position: THREE.Vector3) => void;
   isMoon?: boolean;
+  isPaused: boolean;
+  planetPositions: React.MutableRefObject<Map<string, THREE.Vector3>>;
 };
 
 function makePlanetTexture(project: PlanetProject) {
@@ -54,16 +56,29 @@ function makePlanetTexture(project: PlanetProject) {
   return texture;
 }
 
-export const Planet = memo(function Planet({ project, parentPosition, onClick, isMoon = false }: PlanetProps) {
+const ORBIT_SPEED_SCALE = 0.42;
+
+export const Planet = memo(function Planet({
+  project,
+  parentPosition,
+  onClick,
+  isMoon = false,
+  isPaused,
+  planetPositions
+}: PlanetProps) {
   const group = useRef<THREE.Group>(null);
   const mesh = useRef<THREE.Mesh>(null);
   const initialized = useRef(false);
+  const simulationTime = useRef(0);
   const [hovered, setHovered] = useState(false);
   const texture = useMemo(() => makePlanetTexture(project), [project]);
   const worldPosition = useMemo(() => new THREE.Vector3(), []);
 
-  useFrame(({ clock }) => {
-    const t = clock.elapsedTime;
+  useFrame((_, delta) => {
+    if (!isPaused) {
+      simulationTime.current += delta * ORBIT_SPEED_SCALE;
+    }
+    const t = simulationTime.current;
     const pos = orbitPosition(t, project.orbitRadius, project.orbitSpeed, project.orbitTilt);
     if (parentPosition) pos.add(parentPosition);
 
@@ -75,11 +90,13 @@ export const Planet = memo(function Planet({ project, parentPosition, onClick, i
         group.current.position.lerp(pos, 0.24);
       }
       group.current.getWorldPosition(worldPosition);
+      planetPositions.current.set(project.id, worldPosition.clone());
       const scale = hovered ? (isMoon ? 1.28 : 1.18) : 1;
       group.current.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.18);
     }
     if (mesh.current) {
-      mesh.current.rotation.y += 0.006 + project.orbitSpeed * 0.004;
+      const rotationSpeed = isPaused ? 0 : 0.003 + project.orbitSpeed * 0.002;
+      mesh.current.rotation.y += rotationSpeed;
       mesh.current.rotation.x = Math.sin(t * 0.25 + project.orbitRadius) * 0.05;
     }
   });
@@ -135,7 +152,15 @@ export const Planet = memo(function Planet({ project, parentPosition, onClick, i
       ) : null}
 
       {project.moons?.map((moon) => (
-        <Planet key={moon.id} project={moon} parentPosition={worldPosition} onClick={onClick} isMoon />
+        <Planet
+          key={moon.id}
+          project={moon}
+          parentPosition={worldPosition}
+          onClick={onClick}
+          isMoon
+          isPaused={isPaused}
+          planetPositions={planetPositions}
+        />
       ))}
     </group>
   );

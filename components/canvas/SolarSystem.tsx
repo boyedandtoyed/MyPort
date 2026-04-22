@@ -16,9 +16,11 @@ type SolarSystemProps = {
   selected: SelectedPlanet | null;
   onPlanetClick: (project: PlanetProject, position: THREE.Vector3) => void;
   onReady: () => void;
+  isPaused: boolean;
+  planetPositions: React.MutableRefObject<Map<string, THREE.Vector3>>;
 };
 
-export function SolarSystem({ selected, onPlanetClick, onReady }: SolarSystemProps) {
+export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planetPositions }: SolarSystemProps) {
   return (
     <div className="fixed inset-0 hidden md:block">
       <Canvas
@@ -40,7 +42,13 @@ export function SolarSystem({ selected, onPlanetClick, onReady }: SolarSystemPro
             <OrbitRing key={`${project.id}-orbit`} radius={project.orbitRadius} tilt={project.orbitTilt} />
           ))}
           {projects.map((project) => (
-            <Planet key={project.id} project={project} onClick={onPlanetClick} />
+            <Planet
+              key={project.id}
+              project={project}
+              onClick={onPlanetClick}
+              isPaused={isPaused}
+              planetPositions={planetPositions}
+            />
           ))}
           <CameraController selected={selected} />
         </Suspense>
