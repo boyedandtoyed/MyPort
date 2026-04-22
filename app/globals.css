@@ -27,21 +27,6 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
-.milky-way-photo-background {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(3, 4, 11, 0.28), rgba(3, 4, 11, 0.82)),
-    radial-gradient(circle at 50% 54%, rgba(3, 4, 11, 0.08), rgba(3, 4, 11, 0.72) 72%),
-    url("/images/milky-way.jpg");
-  background-position: center;
-  background-size: cover;
-  opacity: 0.72;
-  filter: saturate(1.05) contrast(1.08);
-}
-
 button,
 a,
 input,
@@ -220,7 +205,7 @@ a {
     radial-gradient(circle at 50% 50%, rgba(253, 184, 19, 0.14), transparent 10rem),
     radial-gradient(circle at 20% 18%, rgba(45, 27, 105, 0.42), transparent 18rem),
     radial-gradient(circle at 80% 75%, rgba(27, 58, 105, 0.38), transparent 18rem),
-    url("/images/milky-way.jpg"),
+    url("/images/milkyway.jpg"),
     #03040b;
   background-position: center;
   background-size: cover;

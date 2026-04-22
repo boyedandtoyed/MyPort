@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { projects, sunProject, type PlanetProject } from "@/data/projects";
 import type { SelectedPlanet } from "@/hooks/usePlanetClick";
 import { CameraController } from "./CameraController";
+import { CosmicBackdrop } from "./CosmicBackdrop";
 import { Nebula } from "./Nebula";
 import { MilkyWay } from "./MilkyWay";
 import { OortCloud } from "./OortCloud";
@@ -35,6 +36,7 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
       >
         <Suspense fallback={null}>
           <ambientLight color="#ffffff" intensity={1.2} />
+          <CosmicBackdrop />
           <MilkyWay />
           <StarField />
           <Nebula />

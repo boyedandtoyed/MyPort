@@ -50,13 +50,13 @@ That folder can be served directly by Nginx.
 
 ## Background Image
 
-Place the Milky Way background image at:
+Place distant space images in:
 
 ```text
-public/images/milky-way.jpg
+public/images/
 ```
 
-The Three.js canvas is transparent, so this image renders behind the solar system on desktop and mobile.
+The desktop scene places these images as distant 3D backdrop planes behind the solar system. The mobile fallback uses `public/images/milkyway.jpg` as its background image.
 
 ## Docker
 
