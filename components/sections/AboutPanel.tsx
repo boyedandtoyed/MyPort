@@ -12,7 +12,7 @@ export function AboutPanel() {
       viewport={{ once: false, amount: 0.28 }}
       transition={{ duration: 0.65 }}
     >
-      <div className="glass-panel max-w-xl p-7 md:p-9">
+      <div className="glass-panel w-full max-w-xl p-7 md:p-9">
         <div className="mb-7 flex items-center gap-5">
           <div className="profile-orb">
             <span>BT</span>
@@ -32,7 +32,7 @@ export function AboutPanel() {
           {[
             ["10", "AI/ML projects"],
             ["CS", "Student"],
-            ["P40", "Local AI server"]
+            ["Open", "Source"]
           ].map(([value, label]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-white/[0.035] p-4">
               <p className="font-heading text-2xl text-white">{value}</p>

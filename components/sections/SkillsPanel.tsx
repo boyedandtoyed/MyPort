@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const skills = {
   Languages: ["Python", "TypeScript", "Java", "Kotlin"],
-  "AI/ML": ["PyTorch", "LangChain", "LangGraph", "Ollama", "RAG", "Fine-tuning"],
+  "AI/ML": ["PyTorch", "LangChain", "LangGraph", "RAG", "Fine-tuning"],
   Backend: ["FastAPI", "Node.js", "PostgreSQL", "SQLite", "Docker"],
   Mobile: ["Android", "Jetpack Compose", "Kotlin"],
   Tools: ["Git", "Linux", "VS Code", "Claude Code"]

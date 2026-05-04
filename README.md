@@ -19,7 +19,7 @@
 - Animation: Framer Motion, GSAP
 - Styling: Tailwind CSS and custom CSS effects
 - Icons: Lucide React
-- Hosting target: Ubuntu server on Dell T5810, Nginx, Docker
+- Hosting target: Ubuntu server, Nginx, Docker
 
 ## Local Development
 

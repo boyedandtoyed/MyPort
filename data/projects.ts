@@ -83,7 +83,7 @@ export const projects: PlanetProject[] = [
     orbitTilt: -0.05,
     tags: ["FastAPI", "LangGraph", "Qdrant", "Neo4j", "RAGAS"],
     description:
-      "Production RAG engine with hybrid dense+sparse search, knowledge graph enrichment, and automatic hallucination scoring. Runs 100% locally on Tesla P40.",
+      "Production RAG engine with hybrid dense+sparse search, knowledge graph enrichment, and automatic hallucination scoring.",
     status: "Building",
     github: "https://github.com/boyedandtoyed/documind",
     liveUrl: "https://documind.binodtiwari.com"
@@ -162,7 +162,7 @@ export const projects: PlanetProject[] = [
     ringTilt: 0.48,
     tags: ["YOLOE", "SAM2", "Gradio", "PyTorch", "TensorRT"],
     description:
-      "Real-time industrial defect detection using YOLOE object detection + SAM2 segmentation. TensorRT optimized for edge GPU deployment. Gradio demo interface.",
+      "Real-time industrial defect detection using YOLOE object detection + SAM2 segmentation. TensorRT optimized for edge deployment. Gradio demo interface.",
     status: "Queued",
     liveUrl: "https://defectscope.binodtiwari.com"
   },
