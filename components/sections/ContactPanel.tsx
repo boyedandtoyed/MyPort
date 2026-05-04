@@ -7,7 +7,7 @@ export function ContactPanel() {
   return (
     <motion.section
       id="contact"
-      className="relative z-10 flex min-h-screen items-end px-5 py-10 md:px-10"
+      className="relative z-10 flex min-h-screen items-end px-5 py-10 pb-24 md:px-10 md:pb-10"
       initial={{ opacity: 0, y: 70 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, amount: 0.24 }}

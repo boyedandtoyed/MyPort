@@ -64,7 +64,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-[420vh] overflow-x-hidden bg-[#03040b] text-white">
+    <main className="relative min-h-[420vh] overflow-x-hidden bg-[#03040b] pb-16 text-white md:pb-0">
       <LoadingScreen visible={!ready} />
       <SolarSystem
         selected={selected}

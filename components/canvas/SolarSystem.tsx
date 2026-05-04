@@ -2,6 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { projects, sunProject, type PlanetProject } from "@/data/projects";
 import type { SelectedPlanet } from "@/hooks/usePlanetClick";
@@ -28,7 +29,7 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
     <div className="fixed inset-0 hidden md:block">
       <Canvas
         gl={{ antialias: true, alpha: true }}
-        dpr={[1, 2]}
+        dpr={[1, Math.min(2, typeof window !== "undefined" ? window.devicePixelRatio : 2)]}
         shadows={false}
         onCreated={() => {
           onReady();
@@ -55,6 +56,14 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
             />
           ))}
           <CameraController selected={selected} />
+          <EffectComposer>
+            <Bloom
+              intensity={1.5}
+              luminanceThreshold={0.2}
+              luminanceSmoothing={0.9}
+              mipmapBlur
+            />
+          </EffectComposer>
         </Suspense>
       </Canvas>
     </div>

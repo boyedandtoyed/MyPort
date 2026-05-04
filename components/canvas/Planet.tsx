@@ -66,6 +66,8 @@ export const Planet = memo(function Planet({
 }: PlanetProps) {
   const group = useRef<THREE.Group>(null);
   const mesh = useRef<THREE.Mesh>(null);
+  const innerGlowRef = useRef<THREE.Mesh>(null);
+  const outerGlowRef = useRef<THREE.Mesh>(null);
   const initialized = useRef(false);
   const simulationTime = useRef(0);
   const [hovered, setHovered] = useState(false);
@@ -97,6 +99,14 @@ export const Planet = memo(function Planet({
       mesh.current.rotation.y += rotationSpeed;
       mesh.current.rotation.x = Math.sin(t * 0.25 + project.orbitRadius) * 0.05;
     }
+    if (innerGlowRef.current) {
+      const mat = innerGlowRef.current.material as THREE.MeshBasicMaterial;
+      mat.opacity += ((hovered ? 0.28 : 0.09) - mat.opacity) * 0.14;
+    }
+    if (outerGlowRef.current) {
+      const mat = outerGlowRef.current.material as THREE.MeshBasicMaterial;
+      mat.opacity += ((hovered ? 0.08 : 0) - mat.opacity) * 0.1;
+    }
   });
 
   const handleClick = (event: ThreeEvent<MouseEvent>) => {
@@ -123,9 +133,14 @@ export const Planet = memo(function Planet({
         <meshBasicMaterial map={texture} color={project.color} />
       </mesh>
 
-      <mesh scale={1.22}>
+      <mesh ref={innerGlowRef} scale={1.22}>
         <sphereGeometry args={[project.radius, 24, 24]} />
         <meshBasicMaterial color={project.color} transparent opacity={0.09} depthWrite={false} />
+      </mesh>
+
+      <mesh ref={outerGlowRef} scale={1.75}>
+        <sphereGeometry args={[project.radius, 16, 16]} />
+        <meshBasicMaterial color={project.color} transparent opacity={0} depthWrite={false} />
       </mesh>
 
       {project.hasRing ? (

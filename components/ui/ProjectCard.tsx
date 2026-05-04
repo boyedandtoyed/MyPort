@@ -5,15 +5,15 @@ import { ExternalLink, Github, Lock, X } from "lucide-react";
 import type { SelectedPlanet } from "@/hooks/usePlanetClick";
 
 const statusStyle = {
-  Live: "border-emerald-300/40 bg-emerald-400/10 text-emerald-200",
-  Building: "border-amber-300/40 bg-amber-400/10 text-amber-200",
-  Queued: "border-slate-300/35 bg-slate-300/10 text-slate-200"
+  Live: "border-emerald-400/50 bg-emerald-400/12 text-emerald-300",
+  Building: "border-amber-400/50 bg-amber-400/12 text-amber-300",
+  Queued: "border-slate-400/40 bg-slate-400/10 text-slate-300"
 };
 
-const statusIcon = {
-  Live: "✓",
-  Building: "↻",
-  Queued: "⌛"
+const statusDot = {
+  Live: "bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]",
+  Building: "bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.8)] animate-pulse",
+  Queued: "bg-slate-400"
 };
 
 export function ProjectCard({ selected, onClose }: { selected: SelectedPlanet | null; onClose: () => void }) {
@@ -53,12 +53,15 @@ export function ProjectCard({ selected, onClose }: { selected: SelectedPlanet | 
           </div>
 
           <div className="mt-5 flex flex-wrap gap-2">
-            <span className={`rounded-full border px-3 py-1 text-xs ${statusStyle[project.status]}`}>
-              {statusIcon[project.status]} {project.status}
+            <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${statusStyle[project.status]}`}>
+              <span className={`size-1.5 rounded-full ${statusDot[project.status]}`} />
+              {project.status}
             </span>
-            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/60">
-              {project.liveUrl?.replace("https://", "")}
-            </span>
+            {project.liveUrl ? (
+              <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/55">
+                {project.liveUrl.replace("https://", "")}
+              </span>
+            ) : null}
           </div>
 
           <p className="mt-5 leading-7 text-white/78">{project.description}</p>
