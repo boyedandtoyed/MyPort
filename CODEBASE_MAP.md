@@ -68,8 +68,8 @@ CODEBASE_MAP.md          — This file
 ### `components/canvas/CosmicBackdrop.tsx`
 - **Purpose:** Places five real space images (Milky Way, Andromeda, LMC, clusters, horseshoe nebula) as additive-blended distant planes.
 - **Props:** none
-- **Key functions/hooks:** `useTexture`, `useMemo`; custom `ShaderMaterial` with edge fade
-- **What it renders:** Group of `<mesh>` planes at z ≈ −180 behind the scene
+- **Key functions/hooks:** `useTexture`; per-image `<Suspense fallback={null}>` + class-based `ImageBoundary` error boundary so one failing texture never blocks the others
+- **What it renders:** Group of `<mesh>` planes at z ≈ −180; uses `meshBasicMaterial` with `blending={AdditiveBlending}` (no custom GLSL — removed ShaderMaterial)
 - **Dependencies:** `@react-three/drei`, `three`
 
 ### `components/canvas/MilkyWay.tsx`
@@ -111,14 +111,15 @@ CODEBASE_MAP.md          — This file
 - **Purpose:** The `<Canvas>` root; composes all Three.js children and postprocessing.
 - **Props:** `selected`, `onPlanetClick`, `onReady`, `isPaused`, `planetPositions`
 - **Key functions/hooks:** `Suspense`
-- **What it renders:** `<Canvas>` → ambient light, CosmicBackdrop, MilkyWay, StarField, Nebula, Sun, OortCloud, OrbitRings, Planets, CameraController, Bloom
+- **What it renders:** `<Canvas>` (alpha=false, powerPreference=high-performance) → ambient light, CosmicBackdrop (own Suspense), then Suspense for MilkyWay/StarField/Nebula/Sun/OortCloud/OrbitRings/Planets/CameraController, then **EffectComposer/Bloom outside Suspense**; `scene.background` set to `#03040b` in `onCreated`
+- **Key fix (2026-05-05):** EffectComposer moved outside `<Suspense>` so Bloom is always active; CosmicBackdrop no longer blocks the main scene; explicit dark background prevents transparent canvas artifact
 - **Dependencies:** All canvas sub-components, `@react-three/postprocessing`
 
 ### `components/canvas/StarField.tsx`
 - **Purpose:** 5 000 coloured stars distributed in a sphere; slow Y-rotation and opacity pulse.
 - **Props:** none
 - **Key functions/hooks:** `useMemo`, `useFrame`
-- **What it renders:** `<points>` with vertex colours
+- **What it renders:** `<points>` with vertex colours; size=0.5, opacity pulses 0.62–0.98 (brighter than original)
 - **Dependencies:** `@react-three/fiber`, `three`
 
 ### `components/canvas/Sun.tsx`

@@ -36,13 +36,13 @@ export function StarField() {
       ref.current.rotation.y = clock.elapsedTime * 0.006;
       ref.current.rotation.x = Math.sin(clock.elapsedTime * 0.08) * 0.015;
       const mat = ref.current.material as THREE.PointsMaterial;
-      mat.opacity = 0.72 + Math.sin(clock.elapsedTime * 0.55) * 0.2;
+      mat.opacity = 0.8 + Math.sin(clock.elapsedTime * 0.55) * 0.18;
     }
   });
 
   return (
     <points ref={ref} geometry={geometry}>
-      <pointsMaterial vertexColors size={0.36} sizeAttenuation transparent opacity={0.92} />
+      <pointsMaterial vertexColors size={0.5} sizeAttenuation transparent opacity={0.9} />
     </points>
   );
 }

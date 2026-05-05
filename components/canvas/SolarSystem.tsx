@@ -28,16 +28,21 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
   return (
     <div className="fixed inset-0 hidden md:block">
       <Canvas
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
         dpr={[1, Math.min(2, typeof window !== "undefined" ? window.devicePixelRatio : 2)]}
         shadows={false}
-        onCreated={() => {
+        onCreated={({ scene }) => {
+          scene.background = new THREE.Color("#03040b");
           onReady();
         }}
       >
+        <ambientLight color="#ffffff" intensity={1.2} />
+
+        {/* Backdrop images each load independently — never blocks the main scene */}
+        <CosmicBackdrop />
+
+        {/* Main scene — particle systems and planets are all synchronous, Suspense is a safety net */}
         <Suspense fallback={null}>
-          <ambientLight color="#ffffff" intensity={1.2} />
-          <CosmicBackdrop />
           <MilkyWay />
           <StarField />
           <Nebula />
@@ -56,15 +61,17 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
             />
           ))}
           <CameraController selected={selected} />
-          <EffectComposer>
-            <Bloom
-              intensity={1.5}
-              luminanceThreshold={0.2}
-              luminanceSmoothing={0.9}
-              mipmapBlur
-            />
-          </EffectComposer>
         </Suspense>
+
+        {/* EffectComposer lives outside Suspense so Bloom is always active */}
+        <EffectComposer>
+          <Bloom
+            intensity={1.5}
+            luminanceThreshold={0.2}
+            luminanceSmoothing={0.9}
+            mipmapBlur
+          />
+        </EffectComposer>
       </Canvas>
     </div>
   );

@@ -1,16 +1,15 @@
 "use client";
 
+import { Component, Suspense } from "react";
 import { useTexture } from "@react-three/drei";
-import { ThreeElements } from "@react-three/fiber";
-import { useMemo } from "react";
 import * as THREE from "three";
 
 type BackdropObject = {
   name: string;
   src: string;
-  position: ThreeElements["mesh"]["position"];
-  rotation: ThreeElements["mesh"]["rotation"];
-  scale: ThreeElements["mesh"]["scale"];
+  position: [number, number, number];
+  rotation: [number, number, number];
+  scale: [number, number, number];
   opacity: number;
 };
 
@@ -57,48 +56,36 @@ const distantObjects: BackdropObject[] = [
   }
 ];
 
+class ImageBoundary extends Component<{ children: React.ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+
 function DistantImage({ object }: { object: BackdropObject }) {
   const texture = useTexture(object.src);
-
-  const material = useMemo(() => {
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.needsUpdate = true;
-
-    return new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      uniforms: {
-        map: { value: texture },
-        opacity: { value: object.opacity }
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform sampler2D map;
-        uniform float opacity;
-        varying vec2 vUv;
-
-        void main() {
-          vec4 texel = texture2D(map, vUv);
-          float edge = min(min(vUv.x, 1.0 - vUv.x), min(vUv.y, 1.0 - vUv.y));
-          float fade = smoothstep(0.0, 0.18, edge);
-          vec3 color = texel.rgb * 0.85;
-          gl_FragColor = vec4(color, texel.a * opacity * fade);
-        }
-      `
-    });
-  }, [object.opacity, texture]);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.needsUpdate = true;
 
   return (
-    <mesh position={object.position} rotation={object.rotation} scale={object.scale} renderOrder={-10}>
+    <mesh
+      position={object.position}
+      rotation={object.rotation}
+      scale={object.scale}
+      renderOrder={-10}
+    >
       <planeGeometry args={[1, 1]} />
-      <primitive object={material} attach="material" />
+      <meshBasicMaterial
+        map={texture}
+        transparent
+        opacity={object.opacity}
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+      />
     </mesh>
   );
 }
@@ -107,7 +94,11 @@ export function CosmicBackdrop() {
   return (
     <group>
       {distantObjects.map((object) => (
-        <DistantImage key={object.name} object={object} />
+        <Suspense key={object.name} fallback={null}>
+          <ImageBoundary>
+            <DistantImage object={object} />
+          </ImageBoundary>
+        </Suspense>
       ))}
     </group>
   );
