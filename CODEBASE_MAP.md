@@ -183,8 +183,10 @@ CODEBASE_MAP.md          — This file
 ### `components/ui/ProjectCard.tsx`
 - **Purpose:** Slide-in right panel revealing full project details when a planet is clicked.
 - **Props:** `selected: SelectedPlanet | null`, `onClose: () => void`
-- **Key functions/hooks:** `AnimatePresence`, `motion` (framer-motion)
-- **What it renders:** `flex flex-col` aside; close button absolute-positioned; inner `overflow-y-auto` div scrolls content. Width: `md:w-[340px] xl:w-[420px]`. Max-height: `max-h-[82vh]` mobile, `md:max-h-[calc(100vh-48px)]` desktop. Padding: `p-5 md:p-4 xl:p-6`
+- **Key functions/hooks:** `AnimatePresence`, `motion` (framer-motion); `useEffect` + `window.matchMedia("(min-width: 768px)")` to track `isDesktop` and feed responsive values into framer-motion `animate` (y:'-50%' on desktop, y:0 slide-up on mobile)
+- **Layout:** Mobile — bottom sheet: `bottom-0 left-0 right-0 max-h-[55vh] rounded-t-2xl`. Desktop — right panel: `md:right-4 md:top-1/2 md:max-h-[calc(100vh-80px)] md:rounded-lg md:w-[clamp(260px,38vw,340px)] lg:w-[clamp(280px,30vw,400px)]`. No Tailwind `-translate-y-1/2` — vertical centering is handled by framer-motion `y:'-50%'` in animate to avoid transform override conflict.
+- **Text sizes:** title `text-sm font-bold`, category `text-[10px]`, description `text-xs leading-relaxed`, tags/status/url `text-[10px]`; buttons use inline `style` overrides to beat globals.css cascade (padding 0.375rem 0.75rem, minHeight unset, fontSize 0.75rem)
+- **Scrollbar:** inner scroll div has `style={{ scrollbarWidth:'thin', scrollbarColor:'rgba(255,255,255,0.2) transparent' }}`
 - **Dependencies:** `framer-motion`, `lucide-react`, `hooks/usePlanetClick` (type only)
 
 ### `components/ui/ProjectSearch.tsx`
