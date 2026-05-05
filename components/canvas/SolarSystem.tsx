@@ -7,6 +7,7 @@ import { projects, sunProject, type PlanetProject } from "@/data/projects";
 import type { SelectedPlanet } from "@/hooks/usePlanetClick";
 import { CameraController } from "./CameraController";
 import { CosmicBackdrop } from "./CosmicBackdrop";
+import { MilkyWaySphere } from "./MilkyWaySphere";
 import { Nebula } from "./Nebula";
 import { MilkyWay } from "./MilkyWay";
 import { OortCloud } from "./OortCloud";
@@ -25,7 +26,7 @@ type SolarSystemProps = {
 
 export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planetPositions }: SolarSystemProps) {
   return (
-    <div className="fixed inset-0 hidden md:block">
+    <div className="fixed inset-0 hidden xs:block" style={{ touchAction: "none" }}>
       <Canvas
         gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
         dpr={[1, Math.min(2, typeof window !== "undefined" ? window.devicePixelRatio : 2)]}
@@ -34,22 +35,18 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
           scene.background = new THREE.Color("#03040b");
           gl.setClearColor("#03040b");
           scene.fog = new THREE.FogExp2("#03040b", 0.0012);
-
-          const loader = new THREE.TextureLoader();
-          loader.load("/images/milkyway.jpg", (texture) => {
-            texture.colorSpace = THREE.SRGBColorSpace;
-            scene.background = texture;
-          });
-
           onReady();
         }}
       >
         <ambientLight color="#ffffff" intensity={1.2} />
 
-        {/* Backdrop images each load independently — never blocks the main scene */}
+        {/* Rotating milky way skybox — loads independently, never blocks scene */}
+        <MilkyWaySphere />
+
+        {/* Backdrop accent images — each loads independently */}
         <CosmicBackdrop />
 
-        {/* Main scene — particle systems and planets are synchronous */}
+        {/* Main scene — all synchronous, Suspense is a safety net */}
         <Suspense fallback={null}>
           <MilkyWay />
           <StarField />

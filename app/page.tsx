@@ -19,7 +19,7 @@ function MobileSolarSystem({ onProjectClick }: { onProjectClick: (project: Plane
   const mobileProjects = useMemo(() => projects.slice(0, 8), []);
 
   return (
-    <div className="mobile-system md:hidden" aria-label="Mobile solar system project view">
+    <div className="mobile-system xs:hidden" aria-label="Mobile solar system project view">
       <div className="mobile-sun">
         <button onClick={() => onProjectClick(sunProject, new THREE.Vector3(0, 0, 0))} type="button">
           Binod

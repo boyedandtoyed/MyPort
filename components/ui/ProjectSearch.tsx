@@ -62,7 +62,7 @@ export function ProjectSearch({ projects, isPaused, onTogglePause, onSelect }: P
     <div ref={rootRef} className="fixed left-1/2 top-4 z-40 w-[min(560px,calc(100vw-1.5rem))] -translate-x-1/2">
       <div className="flex items-center gap-2 rounded-lg border border-white/12 bg-[#080a18]/88 p-2 shadow-2xl backdrop-blur-2xl">
         <div className="grid size-9 flex-none place-items-center text-white/55">
-          <Search size={18} />
+          <Search size={15} />
         </div>
         <input
           ref={inputRef}
@@ -87,7 +87,7 @@ export function ProjectSearch({ projects, isPaused, onTogglePause, onSelect }: P
             title="Close search"
             type="button"
           >
-            <X size={18} />
+            <X size={15} />
           </button>
         ) : null}
         <button
@@ -97,7 +97,7 @@ export function ProjectSearch({ projects, isPaused, onTogglePause, onSelect }: P
           title={isPaused ? "Start orbits" : "Pause orbits"}
           type="button"
         >
-          {isPaused ? <Play size={18} /> : <Pause size={18} />}
+          {isPaused ? <Play size={15} /> : <Pause size={15} />}
         </button>
       </div>
 

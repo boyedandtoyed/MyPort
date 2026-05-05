@@ -26,13 +26,13 @@ export function NavDots({ active, onTravel }: NavDotsProps) {
         {items.map(({ id, label, Icon }) => (
           <button
             key={id}
-            className="group relative grid size-11 place-items-center rounded-full border border-white/15 bg-white/[0.035] text-white/70 backdrop-blur-xl transition hover:border-white/45 hover:text-white"
+            className="group relative grid size-9 place-items-center rounded-full border border-white/15 bg-white/[0.035] text-white/70 backdrop-blur-xl transition hover:border-white/45 hover:text-white"
             onClick={() => onTravel(id)}
             aria-label={label}
             title={label}
             type="button"
           >
-            {isActive(id) ? <Icon size={17} fill="currentColor" /> : <Circle size={15} />}
+            {isActive(id) ? <Icon size={14} fill="currentColor" /> : <Circle size={10} />}
             <span className="pointer-events-none absolute right-12 whitespace-nowrap rounded-full border border-white/10 bg-[#0d0d1f]/95 px-3 py-1 text-xs text-white opacity-0 shadow-cyan backdrop-blur-xl transition group-hover:opacity-100">
               {label}
             </span>
@@ -55,7 +55,7 @@ export function NavDots({ active, onTravel }: NavDotsProps) {
             aria-label={short}
             type="button"
           >
-            <Icon size={20} fill={isActive(id) ? "currentColor" : "none"} />
+            <Icon size={16} fill={isActive(id) ? "currentColor" : "none"} />
             <span className="leading-none">{short}</span>
           </button>
         ))}

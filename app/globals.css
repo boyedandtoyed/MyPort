@@ -298,3 +298,9 @@ a {
     padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
   }
 }
+
+/* OrbitControls needs touch-action:none so the browser doesn't intercept
+   scroll/pinch gestures on the canvas */
+canvas {
+  touch-action: none;
+}

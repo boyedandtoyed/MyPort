@@ -55,11 +55,13 @@ export function CameraController({ selected }: { selected: SelectedPlanet | null
         ref={controlsRef}
         enableDamping
         dampingFactor={0.05}
+        enableRotate={true}
         enablePan={false}
         minDistance={18}
         maxDistance={118}
         minPolarAngle={0.18}
         maxPolarAngle={Math.PI / 2.08}
+        touches={{ ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN }}
       />
     </>
   );

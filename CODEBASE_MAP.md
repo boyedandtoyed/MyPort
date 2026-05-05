@@ -13,11 +13,12 @@ components/
     CameraController.tsx  — PerspectiveCamera + OrbitControls; GSAP-animates camera to selected planet and back
     CosmicBackdrop.tsx    — Five distant galaxy/nebula images rendered as additive-blended 3D planes far behind the scene
     MilkyWay.tsx          — 4 200-point particle band simulating a Milky Way strip; slow rotation
+    MilkyWaySphere.tsx    — Radius-400 textured skybox sphere (inside-out); Milky Way image wraps entire scene; rotates at 0.00008 rad/frame
     Nebula.tsx            — Four radial-gradient sprite clouds for ambient color depth
     OortCloud.tsx         — 1 200-point dust ring (~20 units out) that slowly rotates; marks outer system boundary
     OrbitRing.tsx         — Thin torus ring mesh drawn at each planet's orbitRadius; memoized
     Planet.tsx            — Animated planet: canvas texture, ring mesh, hover glow, click handler, HTML label on hover
-    SolarSystem.tsx       — `<Canvas>` wrapper; composes all canvas children and postprocessing bloom
+    SolarSystem.tsx       — `<Canvas>` wrapper; composes all canvas children; visible xs:block (≥480px); touchAction:none
     StarField.tsx         — 5 000-point starfield sphere with vertex colours; drifts slowly
     Sun.tsx               — Animated sun mesh with two shader-based corona layers and two point lights
 
@@ -62,8 +63,15 @@ CODEBASE_MAP.md          — This file
 - **Purpose:** Controls the Three.js camera position; animates smoothly to a selected planet and back to default.
 - **Props:** `selected: SelectedPlanet | null`
 - **Key functions/hooks:** `useThree`, `useLayoutEffect`, `useEffect`, `gsap.to`
-- **What it renders:** `<PerspectiveCamera>` + `<OrbitControls>` (from drei)
-- **Dependencies:** `@react-three/drei`, `@react-three/fiber`, `gsap`, `hooks/usePlanetClick` (type only)
+- **What it renders:** `<PerspectiveCamera>` + `<OrbitControls>` with explicit `enableRotate={true}` and `touches={{ ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN }}` for touch support
+- **Dependencies:** `@react-three/drei`, `@react-three/fiber`, `gsap`, `three`, `hooks/usePlanetClick` (type only)
+
+### `components/canvas/MilkyWaySphere.tsx`
+- **Purpose:** Rotating milky way skybox — radius-400 sphere textured on the inside (`THREE.BackSide`), wrapping the entire scene. Rotates at 0.00008 rad/frame. Loads independently via its own `<Suspense>` + `SphereBoundary` error boundary.
+- **Props:** none
+- **Key functions/hooks:** `useTexture`, `useFrame`, `useRef`
+- **What it renders:** `<mesh>` sphere with `meshBasicMaterial map={texture} side={BackSide} opacity={0.35}`
+- **Dependencies:** `@react-three/drei`, `@react-three/fiber`, `three`
 
 ### `components/canvas/CosmicBackdrop.tsx`
 - **Purpose:** Places four distant galaxy images (Andromeda, LMC, clusters, horseshoe) as soft additive-blended accent planes. Milky Way is handled separately as `scene.background` in SolarSystem.
@@ -111,8 +119,9 @@ CODEBASE_MAP.md          — This file
 - **Purpose:** The `<Canvas>` root; composes all Three.js children. No postprocessing.
 - **Props:** `selected`, `onPlanetClick`, `onReady`, `isPaused`, `planetPositions`
 - **Key functions/hooks:** `Suspense`
-- **What it renders:** `<Canvas>` (alpha=false, powerPreference=high-performance) → ambient light, CosmicBackdrop (own Suspense), then Suspense for main scene; **no EffectComposer/Bloom** (removed — caused black screen at certain camera angles)
-- **onCreated:** sets `gl.setClearColor('#03040b')`, `scene.fog = FogExp2('#03040b', 0.0012)`, async-loads `milkyway.jpg` as `scene.background` via `THREE.TextureLoader` (starts dark, texture fades in); calls `onReady()`
+- **What it renders:** `<Canvas>` (alpha=false, powerPreference=high-performance) → ambient light, `MilkyWaySphere` (skybox, own Suspense), `CosmicBackdrop` (own Suspense), then main scene Suspense; no Bloom
+- **onCreated:** sets solid dark `scene.background`, `gl.setClearColor`, `scene.fog = FogExp2(0.0012)`; calls `onReady()` immediately
+- **Canvas wrapper:** `fixed inset-0 hidden xs:block` — visible at **≥480px** (tablets + desktop); `style={{ touchAction:'none' }}` so OrbitControls receives touch events
 - **Dependencies:** All canvas sub-components (no @react-three/postprocessing)
 
 ### `components/canvas/StarField.tsx`
@@ -168,14 +177,14 @@ CODEBASE_MAP.md          — This file
 - **Purpose:** Section navigation — right sidebar icon buttons on desktop, bottom tab bar on mobile.
 - **Props:** `active: SpaceSection`, `onTravel: (section: SpaceSection) => void`
 - **Key functions/hooks:** none (pure render)
-- **What it renders:** Fixed sidebar `div` (md+) and fixed bottom `<nav>` (mobile)
+- **What it renders:** Fixed sidebar `div` (md+) with `size-9` buttons, active icon `size={14}`, inactive Circle `size={10}`; fixed bottom `<nav>` (mobile) with icons `size={16}`
 - **Dependencies:** `lucide-react`, `hooks/useScrollSection` (type only)
 
 ### `components/ui/ProjectCard.tsx`
 - **Purpose:** Slide-in right panel revealing full project details when a planet is clicked.
 - **Props:** `selected: SelectedPlanet | null`, `onClose: () => void`
 - **Key functions/hooks:** `AnimatePresence`, `motion` (framer-motion)
-- **What it renders:** Absolute-positioned aside with project name, status badge, description, tech tags, GitHub/live links
+- **What it renders:** `flex flex-col` aside; close button absolute-positioned; inner `overflow-y-auto` div scrolls content. Width: `md:w-[340px] xl:w-[420px]`. Max-height: `max-h-[82vh]` mobile, `md:max-h-[calc(100vh-48px)]` desktop. Padding: `p-5 md:p-4 xl:p-6`
 - **Dependencies:** `framer-motion`, `lucide-react`, `hooks/usePlanetClick` (type only)
 
 ### `components/ui/ProjectSearch.tsx`
@@ -260,7 +269,8 @@ app/page.tsx
 
 SolarSystem
   → CameraController     (selected)
-  → CosmicBackdrop       ()
+  → MilkyWaySphere       () — skybox, own Suspense
+  → CosmicBackdrop       () — accent images, own Suspense per image
   → MilkyWay             ()
   → StarField            ()
   → Nebula               ()
