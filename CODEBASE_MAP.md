@@ -66,10 +66,10 @@ CODEBASE_MAP.md          — This file
 - **Dependencies:** `@react-three/drei`, `@react-three/fiber`, `gsap`, `hooks/usePlanetClick` (type only)
 
 ### `components/canvas/CosmicBackdrop.tsx`
-- **Purpose:** Places five real space images (Milky Way, Andromeda, LMC, clusters, horseshoe nebula) as additive-blended distant planes.
+- **Purpose:** Places four distant galaxy images (Andromeda, LMC, clusters, horseshoe) as soft additive-blended accent planes. Milky Way is handled separately as `scene.background` in SolarSystem.
 - **Props:** none
-- **Key functions/hooks:** `useTexture`; per-image `<Suspense fallback={null}>` + class-based `ImageBoundary` error boundary so one failing texture never blocks the others
-- **What it renders:** Group of `<mesh>` planes at z ≈ −180; uses `meshBasicMaterial` with `blending={AdditiveBlending}` (no custom GLSL — removed ShaderMaterial)
+- **Key functions/hooks:** `useTexture`, `useMemo`; per-image `<Suspense fallback={null}>` + class-based `ImageBoundary` error boundary; ShaderMaterial with `smoothstep(0.0, 0.35, edge)` for gradual edge fade
+- **What it renders:** Four `<mesh>` planes at z ≈ −180–190; opacity 0.06–0.08; scales 1.4× larger than original so edges are far from centre
 - **Dependencies:** `@react-three/drei`, `three`
 
 ### `components/canvas/MilkyWay.tsx`
@@ -108,12 +108,12 @@ CODEBASE_MAP.md          — This file
 - **Dependencies:** `@react-three/drei` (Html), `@react-three/fiber`, `three`, `data/projects`, `lib/three-utils`
 
 ### `components/canvas/SolarSystem.tsx`
-- **Purpose:** The `<Canvas>` root; composes all Three.js children and postprocessing.
+- **Purpose:** The `<Canvas>` root; composes all Three.js children. No postprocessing.
 - **Props:** `selected`, `onPlanetClick`, `onReady`, `isPaused`, `planetPositions`
 - **Key functions/hooks:** `Suspense`
-- **What it renders:** `<Canvas>` (alpha=false, powerPreference=high-performance) → ambient light, CosmicBackdrop (own Suspense), then Suspense for MilkyWay/StarField/Nebula/Sun/OortCloud/OrbitRings/Planets/CameraController, then **EffectComposer/Bloom outside Suspense**; `scene.background` set to `#03040b` in `onCreated`
-- **Key fix (2026-05-05):** EffectComposer moved outside `<Suspense>` so Bloom is always active; CosmicBackdrop no longer blocks the main scene; explicit dark background prevents transparent canvas artifact
-- **Dependencies:** All canvas sub-components, `@react-three/postprocessing`
+- **What it renders:** `<Canvas>` (alpha=false, powerPreference=high-performance) → ambient light, CosmicBackdrop (own Suspense), then Suspense for main scene; **no EffectComposer/Bloom** (removed — caused black screen at certain camera angles)
+- **onCreated:** sets `gl.setClearColor('#03040b')`, `scene.fog = FogExp2('#03040b', 0.0012)`, async-loads `milkyway.jpg` as `scene.background` via `THREE.TextureLoader` (starts dark, texture fades in); calls `onReady()`
+- **Dependencies:** All canvas sub-components (no @react-three/postprocessing)
 
 ### `components/canvas/StarField.tsx`
 - **Purpose:** 5 000 coloured stars distributed in a sphere; slow Y-rotation and opacity pulse.
@@ -126,7 +126,7 @@ CODEBASE_MAP.md          — This file
 - **Purpose:** Animated sun with two glow corona layers built from a custom glow shader; acts as a clickable planet for the sun-core project.
 - **Props:** `project: PlanetProject`, `onClick`
 - **Key functions/hooks:** `useMemo`, `useRef`, `useFrame`; `createGlowMaterial` from lib
-- **What it renders:** `<group>` with two point lights, sun sphere, two glow meshes
+- **What it renders:** `<group>` with two point lights, sun sphere (`meshStandardMaterial` emissive="#FDB813" emissiveIntensity=3.0 so it glows without Bloom), two shader corona glow meshes
 - **Dependencies:** `@react-three/fiber`, `three`, `lib/three-utils`
 
 ### `components/sections/AboutPanel.tsx`

@@ -2,7 +2,6 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { projects, sunProject, type PlanetProject } from "@/data/projects";
 import type { SelectedPlanet } from "@/hooks/usePlanetClick";
@@ -31,8 +30,17 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
         gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
         dpr={[1, Math.min(2, typeof window !== "undefined" ? window.devicePixelRatio : 2)]}
         shadows={false}
-        onCreated={({ scene }) => {
+        onCreated={({ scene, gl }) => {
           scene.background = new THREE.Color("#03040b");
+          gl.setClearColor("#03040b");
+          scene.fog = new THREE.FogExp2("#03040b", 0.0012);
+
+          const loader = new THREE.TextureLoader();
+          loader.load("/images/milkyway.jpg", (texture) => {
+            texture.colorSpace = THREE.SRGBColorSpace;
+            scene.background = texture;
+          });
+
           onReady();
         }}
       >
@@ -41,7 +49,7 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
         {/* Backdrop images each load independently — never blocks the main scene */}
         <CosmicBackdrop />
 
-        {/* Main scene — particle systems and planets are all synchronous, Suspense is a safety net */}
+        {/* Main scene — particle systems and planets are synchronous */}
         <Suspense fallback={null}>
           <MilkyWay />
           <StarField />
@@ -62,16 +70,6 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
           ))}
           <CameraController selected={selected} />
         </Suspense>
-
-        {/* EffectComposer lives outside Suspense so Bloom is always active */}
-        <EffectComposer>
-          <Bloom
-            intensity={1.5}
-            luminanceThreshold={0.2}
-            luminanceSmoothing={0.9}
-            mipmapBlur
-          />
-        </EffectComposer>
       </Canvas>
     </div>
   );

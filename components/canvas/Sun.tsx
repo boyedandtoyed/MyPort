@@ -59,7 +59,13 @@ export function Sun({ project, onClick }: SunProps) {
         }}
       >
         <sphereGeometry args={[3, 96, 96]} />
-        <meshBasicMaterial color="#FFD04A" />
+        <meshStandardMaterial
+          color="#000000"
+          emissive="#FDB813"
+          emissiveIntensity={3.0}
+          roughness={1}
+          metalness={0}
+        />
       </mesh>
       <mesh ref={corona} scale={1.62}>
         <sphereGeometry args={[3, 64, 64]} />
