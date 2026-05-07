@@ -79,9 +79,14 @@ export function ProjectCard({ selected, onClose }: { selected: SelectedPlanet | 
                 {project.status}
               </span>
               {project.liveUrl ? (
-                <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[10px] text-white/55">
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[10px] text-white/55 transition hover:border-white/30 hover:text-white/80"
+                >
                   {project.liveUrl.replace("https://", "")}
-                </span>
+                </a>
               ) : null}
             </div>
 
@@ -120,7 +125,7 @@ export function ProjectCard({ selected, onClose }: { selected: SelectedPlanet | 
                   Repository soon
                 </span>
               )}
-              {project.status === "Live" && project.liveUrl ? (
+              {project.liveUrl ? (
                 <a
                   className="button-muted"
                   href={project.liveUrl}
@@ -129,7 +134,7 @@ export function ProjectCard({ selected, onClose }: { selected: SelectedPlanet | 
                   style={{ padding: "0.375rem 0.75rem", minHeight: "unset", fontSize: "0.75rem" }}
                 >
                   <ExternalLink size={14} />
-                  Open
+                  {project.status === "Live" ? "Open" : "Visit"}
                 </a>
               ) : (
                 <span
