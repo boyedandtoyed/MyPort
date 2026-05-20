@@ -84,7 +84,7 @@ export const projects: PlanetProject[] = [
     tags: ["FastAPI", "LangGraph", "Qdrant", "Neo4j", "RAGAS"],
     description:
       "Production RAG engine with hybrid dense+sparse search, knowledge graph enrichment, and automatic hallucination scoring.",
-    status: "Building",
+    status: "Live",
     github: "https://github.com/boyedandtoyed/documind",
     liveUrl: "https://documind.binodtiwari.com"
   },
@@ -184,7 +184,8 @@ export const projects: PlanetProject[] = [
     tags: ["Legal-BERT", "SpaCy", "CUAD", "Streamlit", "Pydantic"],
     description:
       "NLP system for legal contract analysis. Extracts clauses, flags risky terms, and summarizes obligations using Legal-BERT fine-tuned on the CUAD dataset.",
-    status: "Queued",
+    status: "Live",
+    github: "https://github.com/binodtiwari/contractlens",
     liveUrl: "https://contractlens.binodtiwari.com"
   },
   {
@@ -223,7 +224,8 @@ export const projects: PlanetProject[] = [
     tags: ["QLoRA", "Unsloth", "vLLM", "W&B", "PEFT"],
     description:
       "End-to-end LLM fine-tuning toolkit with QLoRA, Unsloth acceleration, vLLM serving, and W&B experiment tracking.",
-    status: "Queued",
+    status: "Live",
+    github: "https://github.com/boyedandtoyed/modelforge",
     liveUrl: "https://modelforge.binodtiwari.com"
   }
 ];
