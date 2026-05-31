@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Component, Suspense } from "react";
 import * as THREE from "three";
 import { projects, sunProject, type PlanetProject } from "@/data/projects";
 import type { SelectedPlanet } from "@/hooks/usePlanetClick";
@@ -16,6 +16,19 @@ import { Planet } from "./Planet";
 import { StarField } from "./StarField";
 import { Sun } from "./Sun";
 
+class CanvasBoundary extends Component<{ onReady: () => void; children: React.ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch() {
+    this.props.onReady();
+  }
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+
 type SolarSystemProps = {
   selected: SelectedPlanet | null;
   onPlanetClick: (project: PlanetProject, position: THREE.Vector3) => void;
@@ -27,6 +40,7 @@ type SolarSystemProps = {
 export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planetPositions }: SolarSystemProps) {
   return (
     <div className="fixed inset-0 hidden xs:block" style={{ touchAction: "none" }}>
+      <CanvasBoundary onReady={onReady}>
       <Canvas
         gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
         dpr={[1, Math.min(2, typeof window !== "undefined" ? window.devicePixelRatio : 2)]}
@@ -68,6 +82,7 @@ export function SolarSystem({ selected, onPlanetClick, onReady, isPaused, planet
           <CameraController selected={selected} />
         </Suspense>
       </Canvas>
+      </CanvasBoundary>
     </div>
   );
 }
