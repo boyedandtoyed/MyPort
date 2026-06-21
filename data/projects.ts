@@ -185,7 +185,7 @@ export const projects: PlanetProject[] = [
     description:
       "NLP system for legal contract analysis. Extracts clauses, flags risky terms, and summarizes obligations using Legal-BERT fine-tuned on the CUAD dataset.",
     status: "Live",
-    github: "https://github.com/binodtiwari/contractlens",
+    github: "https://github.com/boyedandtoyed/contractlens",
     liveUrl: "https://contractlens.binodtiwari.com"
   },
   {
