@@ -45,7 +45,8 @@ export const sunProject: PlanetProject = {
   tags: ["MLflow", "Airflow", "Evidently AI", "Prometheus", "Grafana"],
   description:
     "Full MLOps pipeline: experiment tracking, automated retraining, drift detection, and Grafana monitoring dashboards.",
-  status: "Queued",
+  status: "Live",
+  github: "https://github.com/boyedandtoyed/MLXpipeline",
   liveUrl: "https://mlpipelinex.binodtiwari.com"
 };
 
@@ -103,7 +104,8 @@ export const projects: PlanetProject[] = [
     tags: ["LangGraph", "MCP", "GitHub Actions", "Slack", "PostgreSQL"],
     description:
       "AI DevOps agent that monitors CI/CD pipelines, auto-diagnoses failures, and posts fixes to Slack. Integrates with GitHub Actions via MCP.",
-    status: "Queued",
+    status: "Live",
+    github: "https://github.com/boyedandtoyed/pipelineguard",
     liveUrl: "https://pipelineguard.binodtiwari.com"
   },
   {
@@ -121,7 +123,8 @@ export const projects: PlanetProject[] = [
     tags: ["CrewAI", "Tavily", "LlamaIndex", "Qdrant", "Streamlit"],
     description:
       "Multi-agent deep research system. Specialized agents search, synthesize, and fact-check in parallel, producing cited research reports evaluated by RAGAS.",
-    status: "Queued",
+    status: "Live",
+    github: "https://github.com/boyedandtoyed/researchcrew",
     liveUrl: "https://researchcrew.binodtiwari.com"
   },
   {
@@ -142,7 +145,8 @@ export const projects: PlanetProject[] = [
     tags: ["AutoGen 0.4", "MCP", "DuckDB", "Pandas", "Plotly", "FastAPI"],
     description:
       "Conversational AI agent that connects to databases, writes and executes data pipelines on the fly, and generates interactive Plotly dashboards from natural language queries.",
-    status: "Queued",
+    status: "Live",
+    github: "https://github.com/boyedandtoyed/dataflowagent",
     liveUrl: "https://dataflowagent.binodtiwari.com"
   },
   {
@@ -163,7 +167,8 @@ export const projects: PlanetProject[] = [
     tags: ["YOLOE", "SAM2", "Gradio", "PyTorch", "TensorRT"],
     description:
       "Real-time industrial defect detection using YOLOE object detection + SAM2 segmentation. TensorRT optimized for edge deployment. Gradio demo interface.",
-    status: "Queued",
+    status: "Live",
+    github: "https://github.com/boyedandtoyed/defectscope",
     liveUrl: "https://defectscope.binodtiwari.com"
   },
   {
@@ -206,7 +211,8 @@ export const projects: PlanetProject[] = [
     tags: ["liboqs", "ML-DSA-65", "ML-KEM-768", "FastAPI", "Next.js"],
     description:
       "Post-quantum cryptography API and wallet UI. Implements NIST-standardized ML-DSA-65 signatures and ML-KEM-768 key encapsulation, a quantum-resistant security layer.",
-    status: "Queued",
+    status: "Live",
+    github: "https://github.com/boyedandtoyed/quantumshield",
     liveUrl: "https://quantumshield.binodtiwari.com"
   },
   {
